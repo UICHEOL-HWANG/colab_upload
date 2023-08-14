@@ -1125,3 +1125,586 @@ for i in tour_info:
 
 오늘 내용 요약하자면 리스트 연산함수 / 읽기 쓰기 with문 / 리스트 컴프리헨션 / 딕셔너리 언패킹 패킹 등이다.
 
+-----
+
+# 함수
+
+## 1.함수(function) 사용하기
+
+- 자주 사용할 기능을 미리 만들어서 반복 재사용 할 수 있게 만든 것
+- print(),split(),input() 등은 미리 만들어놓은 함수이다.
+
+```python
+def function():
+  code...
+  return
+```
+
+```python
+# hello 파이썬이라는 글자를 출력하는 함수 
+
+def hello():
+  print('python')
+```
+
+### 함수 호출 순서
+
+```python
+hello2()
+
+def hello2():
+  print('Hello2 function')
+
+# 실행이 안된다 정의를 먼저 하고 나서 실행을 해야 한다. 
+```
+
+## **3) 함수의 매개변수**
+
+- 함수의 매개변수는 함수명 뒤의 괄호 안에 넣는 변수
+
+```python
+def function(args):
+  .... code
+```
+
+```python
+def circle(c):
+  return c * c * 3.14
+circle(3)
+28.26
+```
+
+### **4) 매개변수 2개짜리 함수**
+
+덧셈 함수 만들기
+
+```python
+def calc(a,b):
+  result = a + b 
+  return result
+```
+
+```python
+# 반환 값이 없는 경우 
+
+def add(num1):
+  total = num1 + 1
+```
+
+### **6) 함수에서 결과 값을 여러 개 반환하기**
+
+```python
+def function(args):
+  ___ return result1, result2
+```
+
+- 기본적으로 함수에서 반환 하는 값은 1개임
+- 2개 이상인 경우에는 튜플로 만들어서 반환 함
+
+```python
+def add_sub(a,b):
+  return a + b , a * b
+```
+
+### **7) 중간에 함수를 종료시키기 위한 용도로 쓰는 return 이 있다 .**
+
+```python
+# 1-100까지 짝수만 출력하다가 51번째에 종료되게 하기 
+
+def calc(age):
+  for i in age:
+    if i % 2 == 0 :
+      print(i,end=' ')
+    elif i == 51:
+      return
+```
+
+```python
+age = range(1,101)
+
+calc(age)
+2 4 6 8 10 12 14 16 18 20 22 24 26 28 30 32 34 36 38 40 42 44 46 48 50
+```
+
+### **2. 함수에서 위치 인수와 키워드 인수 사용하기**
+
+1) 위치인수(positional argument)
+
+- 함수에 인수를 순서대로 넣는 방식
+- 인수의 위치가 정해져있다.
+
+```python
+def print_nums(a,b,c):
+  print(a)
+  print(b)
+  print(c)
+```
+
+```python
+print_nums(3,4,5)
+3
+4
+5
+```
+
+### **2) 언패킹을 이용하여 언박싱 리스트 자료 차례대로 넣기**
+
+- (에스트리크)를 list /tuple 앞에 붙여서 언패킹
+- 단, 함수의 매개 변수와 리스트 / 튜플 요소 개수가 같아야 한다.
+
+```python
+L = [5,6,7]
+
+print_nums(*L)
+5
+6
+7
+```
+
+## **3) 가변인수**
+
+- 여러 개의 자료 입력 받기 * args
+
+```python
+def sum2(*args):
+  # args arguments의 약자
+  hap = 0
+  # args에서 변수 값을 받으면 초기 값은 무조건 튜플로 변환된다
+  for i in args:
+    hap += i
+  return hap
+
+sum2(1,2,3,4,5,6,7,8,9,10)
+55
+```
+
+```python
+L = [5,6,7]
+sum2(*L)
+18
+```
+
+## **4) 고정인수와 가변인수를 함께 사용하기**
+
+- 고정인수와 가변인수를 함께 사용할 때는 고정 매개변수를 먼저 지정하고 , 그 다음 매개변수에 *을 붙여준다.
+
+```python
+
+def func(a,*args): # 고정인수,가변인수
+
+def func2(*args,a) : # 가변인수, 고정인수 X 사용할 수 없음
+```
+
+- 고정인수가 오고 난 뒤에 가변인수가 들어가야 실행이 된다.
+
+```python
+# 1부터 10까지 숫자에 3을 곱하는 함수
+
+def func(a,*args):
+  result = []
+  for i in args:
+    print(a*i)
+    result.append(a*i)
+  return result
+
+calc = func(2,*[1,2,3,4,5,6,7,8,9,10])
+print(calc)
+
+2
+4
+6
+8
+10
+12
+14
+16
+18
+20
+[2, 4, 6, 8, 10, 12, 14, 16, 18, 20]
+```
+
+## **함수 내에서 리스트 표현식 사용하기**
+
+```python
+def muls(a,*args):
+  return [a * num for num in args]
+
+muls(3,*[1,2,3,4,5,6,7,8,9,10])
+[3, 6, 9, 12, 15, 18, 21, 24, 27, 30]
+```
+
+## **개인정보를 출력하는 함수**
+
+```python
+def personal_info(name,age,address):
+  print(f'이름: {name}')
+  print(f'나이: {age}')
+  print(f'주소: {address}')
+
+personal_info('홍길동',24,'서초구')
+
+이름: 홍길동
+나이: 24
+주소: 서초구
+```
+
+## **위의 함수는 인수의 순서를 모두 기억 해야 하기 때문에 사용 하기 어려움**
+
+- 인수의 순서와 용도를 매번 기억하기 않도록 하기 위해서 키워드 인수 (keyword argument)를 사용
+- 예) print(a,sep='',end='n)에서 sep=과, end= 이 키워드 인수
+
+```python
+# personal_info 함수를 키워드 인수 방식으로 호출해보기
+
+personal_info(name='홍길동',age=30,address='서초구 잠원동')
+```
+
+```python
+# 키워드 인수 방식으로 호출할 경우 인수의 순서나 위치를 변경할 수 있다
+
+personal_info(address='서초구 잠원동',name='홍길동',age=30)
+```
+
+## **5) 키워드 인수와 딕셔너리 언패킹 사용하기**
+
+- *dict
+- 함수의 넣는 인자를 딕셔너리로 넣을 때 사용
+- 사용하는 방법은 **dictionary
+
+```python
+x = {'name':'홍길동','age':23,'address':'거어드레스불러보소'}
+personal_info(**x)
+이름: 홍길동
+나이: 23
+주소: 거어드레스불러보소
+```
+
+## **여러개의 값을 받아 매개변수 이름과 값을 출력하는 함수**
+
+```python
+def personal_info2(**kwargs): #kwargs(keyword arguments)
+  print(kwargs)
+  print(type(kwargs))
+  for kw,arg in kwargs.items():
+    print(kw,':',arg,sep='')
+
+y = {'주소':'마 어드레스 부르소'}
+
+# 인수를 한개만 입력
+personal_info2(name='홍길동')
+name:홍길동
+```
+
+```python
+# 인수를 한개만 입력
+personal_info2(name='홍길동',address='마 어드레스 부르소',age=30)
+
+#{'name': '홍길동', 'address': '마 어드레스 부르소', 'age': 30}
+#<class 'dict'>
+#name:홍길동
+#address:마 어드레스 부르소
+#age:30
+
+# print문으로 kwargs, type kw,args를 모두 출력하라고 지시했기 때문에 다같이 출력됨
+
+```
+
+---
+
+## *kwargs를 사용한 가변 인수 함수 코딩
+
+- 딕셔너리 형태의 자료가 들어오므로 함수 내에서 key가 있는지 확인하는 코드가 필요
+
+```python
+def personal_info3(**kwargs):
+  if 'name' in kwargs:
+    print(f'이름 : {kwargs["name"]}')
+  if 'age' in kwargs:
+    print(f'나이 : {kwargs["age"]}')
+  if 'address' in kwargs:
+    print(f'주소 : {kwargs["address"]}')
+
+personal_info3(**x)
+이름 : 홍길동
+나이 : 23
+주소 : 거어드레스불러보소
+```
+
+## **6) 위치 인수와 키워드 인수 함께 사용하기**
+
+- 항상 위치 인수가 앞 쪽 키워드에 와야 함
+
+```python
+def func(위치인수,키워드인수):
+def func(*가변인수,**키워드인수):
+```
+
+```python
+def custom_print(*args,**kwargs):
+  print(*args,**kwargs)
+custom_print(1,2,3,'python',sep=':',end='')
+1:2:3:python
+```
+
+## **3. 매개변수의 초기 값 지정하기**
+
+- 함수를 호출할 때 인수의 값을 넣지 않고 생략 하고 싶을 때 사용
+- 예) print문 사용할 때 sep는 기본 값이 공백 → " " end는 기본 값이 _\n 인데 매번 지정하여 넣지 않아도 기본적으로 입력 되어 작동함.
+
+```python
+def personal_info4(name,age,address='비공개'):  #address는 기본값을 '' 공백을 default로 둠
+  print(f'이름 : {name}')
+  print(f'나이 : {age}')
+  print(f'주소 : {address}')
+
+personal_info4('홍길동',24)
+이름 : 홍길동
+나이 : 24
+주소 : 비공개
+
+personal_info4('홍길동',24,'서초구') #값을 넣어주면 default 값인 비공개가 없어지고 서초구가 출력이 된다
+이름 : 홍길동
+나이 : 24
+주소 : 서초구
+```
+
+## **초기 값이 지정된 매개변수의 위치는 반드시 가장 마지막어야 함.**
+
+```python
+def personal_info4(name,address='비공개',age):  #address는 기본값을 '' 공백을 default로 둠
+  print(f'이름 : {name}')
+  print(f'나이 : {age}')
+  print(f'주소 : {address}')
+
+File "<ipython-input-97-7a36956e9ff5>", line 1
+    def personal_info4(name,address='비공개',age):  #address는 기본값을 '' 공백을 default로 둠
+                                          ^
+SyntaxError: non-default argument follows default argument
+```
+
+## **default 값은 가장 마지막에 배정하지 않으면 상기 오류가 나타난다.**
+
+- non-default argument follows default argument
+
+---
+
+## 두 수의 사칙연산 계산기 만들기
+
+```python
+def calc2(a,b):
+  print(f'{a} + {b} = {a+b}')
+  print(f'{a} - {b} = {a-b}')
+  print(f'{a} * {b} = {a*b}')
+  print(f'{a} / {b} = {a/b}')
+
+calc2(5,3)
+```
+
+## **입력된 문자가 한글인지 판별하는 함수**
+
+- ord() 문자 1개를 아스키 코드 값으로 변환, 한글의 아스키코드 범위는 12593-55203까지
+
+문자를 입력 받아 한글인지 아닌지 판별하는 함수를 작성하시오
+
+```python
+# 풀이
+
+def is_ko(ch):
+  start = 12593
+  end = 55203
+  if start<= ord(ch)<= end :
+    print('한글')
+    return True
+  else:
+    print('한글이 아닙니다')
+    return False
+
+# user_input = input('문자열을 입력하세요 >> ')
+is_ko('')
+```
+
+다른버전 
+
+```python
+def kor_is(ch):
+  for i in ch:
+    ascii = ord(i)
+    if 65 <= ascii <= 122:
+      return '영문자'
+    elif 12593 <= ascii <= 55203:
+      return '한글'
+    else:
+      return '범위 이외의 글자입니다'
+
+user_input = input('입력 >> ')
+kor_is(user_input)
+```
+
+- 참고 : ord 함수는 특정 문자를 유니코드 번호로 바꾸어주는 함수이다
+
+---
+
+## **4. 함수 Doc 스트링 사용하기**
+
+- 함수의 기능을 설명하거나, 사용법을 함수 내에 적어 놓는 것
+
+```python
+def func(매개변수):
+  ____ """DocStr('함수에 대한 설명')"""
+  __ code
+
+  - return
+
+```
+
+- 독스트링은 함수 실행시에는 출력되지 않는다.
+- 독스트링을 출력 하고 싶을 때에
+    - print(함수이름.**doc**)
+    - help(함수이름)이 2가지 방법으로 출력한다
+
+---
+
+## **실습**
+
+add 함수에 doc 스트링 입력하여 실행 및 출력해보기
+
+```python
+def add(a,b):
+  """
+  이 함수는 a와 b를 더한 뒤 결과를 반환하는 함수입니다.
+  """
+  return a + b
+
+Help on function add in module __main__:
+
+add(a, b)
+    이 함수는 a와 b를 더한 뒤 결과를 반환하는 함수입니다.
+
+None
+```
+
+---
+
+# **람다 표현식(lambda expression)**
+
+- 함수 이름이 없는 함수 (익명함수)
+- 간단한 함수 작성 하거나 다른 함수의 인수로, 함수를 넣을 때 사용한다.
+
+```python
+# 10을 더하는 함수 기존 
+def func(x):
+  return x + 10
+func(5)
+
+15
+```
+
+## **람다함수를 만든 뒤 호출하기**
+
+```python
+# 10을 더하는 함수 
+
+(lambda x: x+10)(5)
+```
+
+## **람다 함수를 변수에 넣고 변수에 인수를 넣어 호출하기**
+
+```python
+plus_five = (lambda x : x+5)
+plus_five(5)
+
+10
+```
+
+## **람다 표현식을 함수의 인수로 사용하기**
+
+```python
+def plus_ten(x):
+  return x + 10
+
+list(map(plus_ten,[1,2,3])) #맵으로 1,2,3을 매핑해서 함수에 넣어준 후에 , 리스트로 반환 시켜줌
+
+[11, 12, 13]
+
+list(map(lambda x : x + 10,[1,2,3])) #람다로 축약
+[11, 12, 13]
+# 결과가 같다
+```
+
+## **람다 표현식의 조건부 표현식 사용하기**
+
+- 리스트 컴프리헨션을 이용하여 사용한다.
+
+```python
+# 3의 배수만 문자열로 바꾸기 
+
+result = []
+
+def three(*args):
+  for i in args:
+
+    if i % 3 == 0 :
+      i = str(i)
+      result.append(i)
+    else: 
+      result.append(i)
+  return result
+
+a = three(*[1,2,3,4,5,6,7,8,9,10])
+
+print(a)
+[1, 2, '3', 4, 5, '6', 7, 8, '9', 10]
+```
+
+### 3의 배수만 문자열로 바꾸기
+
+```python
+L = [1,2,3,4,5,6,7,8,9,10]
+
+list(map(lambda x: str(x) if x % 3 == 0 else x,L))
+[1, 2, '3', 4, 5, '6', 7, 8, '9', 10]
+```
+
+### map 함수에 표현식을 넣어 여러개의 리스트 연산하기
+
+```python
+a = [1,2,3,4,5]
+b = [2,4,6,8,10]
+c = [3,6,9,12,15]
+
+list(map(lambda x,y,z: x * y * z,a,b,c))
+[6, 48, 162, 384, 750]
+```
+
+### **filter 함수를 사용하여 조건에 맞는 요소만 가져오기**
+
+```python
+def f(x):
+  return 5 < x < 10
+
+a = [8, 3, 2, 10, 15, 7, 1, 9, 0, 11]
+
+list(filter(f,a)) #5보다 크고 10보다 작은 수만 출력
+[8, 7, 9]
+
+list(filter(lambda x: 5<x<10,a)) # 상기 함수와 같은 식을 lambd로 사용 하기
+[8, 7, 9]
+```
+
+### **find 함수 사용하여 이미지 파일만 가져오기**
+
+- find('찾을 내용') → 찾을 내용과 일치하는 문자열에 시작 인덱스를 반환 하고, 없을 시 -1을 반환한다.
+
+```python
+files = ['font','1.png','10.jpg','11.gif','2.jpg','3.png','table.xlsx','spec.doc']
+
+for idx,i in enumerate(files):
+  if i.find('.png') != -1:
+    print(f"{idx+1}번 {i} : {i.find('.png')}")
+2번 1.png : 1
+6번 3.png : 1
+
+list(filter(lambda x: x.find('.png') != -1 or x.find('.jpg') != -1,files))
+
+['1.png', '10.jpg', '2.jpg', '3.png']
+```
